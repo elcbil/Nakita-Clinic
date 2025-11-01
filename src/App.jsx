@@ -1,9 +1,10 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import DataPasien from "./pages/DataPasien";
 import JadwalAppointment from "./pages/JadwalAppointment";
+import DetailPasien from "./pages/DetailPasien";
 
 function App() {
   return (
@@ -20,11 +21,11 @@ function App() {
           {/* Halaman data pasien */}
           <Route path="/pasien" element={<DataPasien />} />
 
+          {/* Halaman detail pasien */}
+          <Route path="/data-pasien/:id" element={<DetailPasien />} />
+
           {/* Halaman jadwal appointment */}
-          <Route
-            path="/jadwalappointment"
-            element={<JadwalAppointment />}
-          />
+          <Route path="/jadwalappointment" element={<JadwalAppointment />} />
         </Routes>
       </div>
     </div>

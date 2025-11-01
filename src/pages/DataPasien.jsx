@@ -1,12 +1,13 @@
 import React from "react";
-import { Edit, Trash2, Plus } from "lucide-react";
+import { Edit, Trash2, Plus, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const DataPasien = () => {
   const pasien = [
-    { id: 1, nama: "Siti Rahma", umur: 29, gender: "Perempuan", alamat: "Medan" },
-    { id: 2, nama: "Andi Pratama", umur: 34, gender: "Laki-laki", alamat: "Binjai" },
-    { id: 3, nama: "Rina Marlina", umur: 22, gender: "Perempuan", alamat: "Lubuk Pakam" },
-    { id: 4, nama: "Fajar Hidayat", umur: 40, gender: "Laki-laki", alamat: "Tanjung Morawa" },
+    { Nomorrm: "RM001", nama: "Siti Rahma", nik: 3174012345670001, umur: 29, gender: "Perempuan", alamat: "Medan" },
+    { Nomorrm: "RM002", nama: "Andi Pratama", nik: 3174012345670001, umur: 34, gender: "Laki-laki", alamat: "Binjai" },
+    { Nomorrm: "RM003", nama: "Rina Marlina", nik: 3174012345670001, umur: 22, gender: "Perempuan", alamat: "Lubuk Pakam" },
+    { Nomorrm: "RM004", nama: "Fajar Hidayat", nik: 3174012345670001, umur: 40, gender: "Laki-laki", alamat: "Tanjung Morawa" },
   ];
 
   return (
@@ -24,8 +25,9 @@ const DataPasien = () => {
         <table className="w-full text-left border-collapse">
           <thead className="bg-blue-100 text-gray-700">
             <tr>
-              <th className="py-3 px-5">ID</th>
+              <th className="py-3 px-5">Nomor RM</th>
               <th className="py-3 px-5">Nama</th>
+              <th className="py-3 px-5">NIK</th>
               <th className="py-3 px-5">Umur</th>
               <th className="py-3 px-5">Jenis Kelamin</th>
               <th className="py-3 px-5">Alamat</th>
@@ -34,19 +36,20 @@ const DataPasien = () => {
           </thead>
           <tbody>
             {pasien.map((p, i) => (
-              <tr
-                key={p.id}
-                className={`${i % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-blue-50 transition`}
-              >
-                <td className="py-3 px-5">{p.id}</td>
+              <tr key={p.Nomorrm} className={`${i % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-blue-50 transition`}>
+                <td className="py-3 px-5">{p.Nomorrm}</td>
                 <td className="py-3 px-5 font-medium text-gray-800">{p.nama}</td>
+                <td className="py-3 px-5 ">{p.nik}</td>
                 <td className="py-3 px-5">{p.umur}</td>
                 <td className="py-3 px-5">{p.gender}</td>
                 <td className="py-3 px-5">{p.alamat}</td>
                 <td className="py-3 px-5 flex justify-center gap-2">
-                  <button className="p-2 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-700">
-                    <Edit size={18} />
-                  </button>
+                  <Link
+                    to={`/data-pasien/${p.Nomorrm}`} // arahkan ke id pasien
+                    className="p-2 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-700 inline-flex items-center"
+                  >
+                    <Eye size={18} />
+                  </Link>
                   <button className="p-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-700">
                     <Trash2 size={18} />
                   </button>
