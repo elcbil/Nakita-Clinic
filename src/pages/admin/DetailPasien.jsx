@@ -4,15 +4,18 @@ import { useState, useEffect } from "react";
 
 const DetailPasien = () => {
   const [activeTab, setActiveTab] = useState("info");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("semua");
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Detail pasien:", id);
   }, [id]);
-  const navigate = useNavigate();
 
-  // sementara data dummy
+  // 🔹 Data dummy pasien (pindahkan ke atas)
   const pasien = {
+    id: "P001",
     nama: "Budi Santoso",
     umur: 39,
     gender: "Laki-Laki",
@@ -29,11 +32,49 @@ const DetailPasien = () => {
       telepon: "0813-9876-5432",
     },
     riwayatPenyakit: ["Hipertensi", "Diabetes Tipe 2"],
-    totalKunjungan: 15,
-    terakhir: "10 Des 2024",
-    resep: 2,
-    totalTransaksi: "Rp 3.500.000",
+    transaksi: [
+      {
+        id: "TRX-001",
+        tanggal: "10 Des 2024",
+        waktu: "09:00",
+        jenis: "Konsultasi Umum",
+        dokter: "Dr. Sarah Wahyuni",
+        biaya: 150000,
+        status: "Lunas",
+        metodeBayar: "Tunai",
+      },
+      {
+        id: "TRX-002",
+        tanggal: "8 Des 2024",
+        waktu: "10:30",
+        jenis: "Tes Darah Lengkap",
+        dokter: "Dr. Aditya",
+        biaya: 250000,
+        status: "Pending",
+        metodeBayar: "Transfer Bank",
+      },
+    ],
   };
+
+  // 🔹 Utility format rupiah
+  const formatRupiah = (angka) => {
+    return angka.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    });
+  };
+
+  // 🔹 Filter dan total transaksi
+  const filteredTransaksi = pasien.transaksi.filter((item) => {
+    const matchSearch = item.jenis.toLowerCase().includes(searchTerm.toLowerCase()) || item.dokter.toLowerCase().includes(searchTerm.toLowerCase()) || item.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchFilter = filterStatus === "semua" || item.status.toLowerCase() === filterStatus.toLowerCase();
+    return matchSearch && matchFilter;
+  });
+
+  const totalTransaksi = pasien.transaksi.reduce((sum, item) => sum + item.biaya, 0);
+  const totalLunas = pasien.transaksi.filter((item) => item.status === "Lunas").reduce((sum, item) => sum + item.biaya, 0);
+  const totalPending = pasien.transaksi.filter((item) => item.status === "Pending").reduce((sum, item) => sum + item.biaya, 0);
 
   return (
     <div className="max-w-5xl mx-auto bg-white shadow-md rounded-2xl p-6">
@@ -148,6 +189,7 @@ const DetailPasien = () => {
                 </div>
               </div>
             )}
+
             {/* Konten Tab: Resep dan Obat */}
             {activeTab === "resep" && (
               <div className="text-sm mb-3">
@@ -310,6 +352,50 @@ const DetailPasien = () => {
               </div>
             )}
           </div>
+
+          {/* Transaction List */}
+          {activeTab === "pembayaran" && (
+            <div className="text-sm mb-3">
+              <div className="max-h-64 overflow-y-auto divide-y divide-gray-200 rounded-lg">
+                <table className="w-full">
+                  <thead className="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Transaksi</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Layanan</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dokter/Unit</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Biaya</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metode</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {filteredTransaksi.map((transaksi) => (
+                      <tr key={transaksi.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">{transaksi.id}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <div>{transaksi.tanggal}</div>
+                          <div className="text-xs text-gray-500">{transaksi.waktu}</div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-900">{transaksi.jenis}</td>
+                        <td className="px-6 py-4 text-sm text-gray-900">{transaksi.dokter}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">{formatRupiah(transaksi.biaya)}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${transaksi.status === "Lunas" ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-800"}`}>{transaksi.status}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{transaksi.metodeBayar}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          <button className="text-blue-600 hover:text-blue-800 font-medium">Detail</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
           <div className="mt-6 flex justify-end">
             <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 text-sm">Edit Data</button>

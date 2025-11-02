@@ -1,35 +1,41 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import DataPasien from "./pages/DataPasien";
-import JadwalAppointment from "./pages/JadwalAppointment";
-import DetailPasien from "./pages/DetailPasien";
+import Home from "./pages/admin/Home";
+import DataPasien from "./pages/admin/DataPasien";
+import JadwalAppointment from "./pages/admin/JadwalAppointment";
+import DetailPasien from "./pages/admin/DetailPasien";
+import LoginAdmin from "./pages/LoginAdmin";
 
-function App() {
+export default function App() {
+  const isAdminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      <Navbar />
+      {/* Navbar hanya muncul kalau bukan halaman login */}
+      {!isLoginPage && <Navbar />}
 
-      {/* Halaman Konten */}
+      {/* Konten utama */}
       <div className="grow bg-gray-50 p-4 sm:p-6 overflow-y-auto scroll-smooth">
         <Routes>
-          {/* Halaman utama */}
-          <Route path="/" element={<Home />} />
+          {/* Halaman login */}
+          <Route path="/login" element={<LoginAdmin />} />
 
-          {/* Halaman data pasien */}
-          <Route path="/pasien" element={<DataPasien />} />
+          {/* Home */}
+          <Route path="/" element={isAdminLoggedIn ? <Home /> : <Navigate to="/login" replace />} />
 
-          {/* Halaman detail pasien */}
-          <Route path="/data-pasien/:id" element={<DetailPasien />} />
+          {/* Data Pasien */}
+          <Route path="/pasien" element={isAdminLoggedIn ? <DataPasien /> : <Navigate to="/login" replace />} />
 
-          {/* Halaman jadwal appointment */}
-          <Route path="/jadwalappointment" element={<JadwalAppointment />} />
+          {/* Detail Pasien */}
+          <Route path="/data-pasien/:id" element={isAdminLoggedIn ? <DetailPasien /> : <Navigate to="/login" replace />} />
+
+          {/* Jadwal */}
+          <Route path="/jadwalappointment" element={isAdminLoggedIn ? <JadwalAppointment /> : <Navigate to="/login" replace />} />
         </Routes>
       </div>
     </div>
   );
 }
-
-export default App;
