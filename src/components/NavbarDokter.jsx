@@ -1,4 +1,5 @@
-import { Home, Users, CalendarDays, FlaskConical, Pill, CreditCard, User } from "lucide-react";
+import { Home, Users, CalendarDays, FlaskConical, Pill, CreditCard, User, ClipboardClock, Pencil, Clock } from "lucide-react";
+import { Clipboard as ClipboardIcon } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/images.png";
@@ -8,12 +9,12 @@ const Navbar = () => {
   const location = useLocation();
 
   const menus = [
-    { name: "Dashboard", path: "/", icon: <Home size={22} /> },
-    { name: "Data Pasien", path: "/pasien", icon: <Users size={22} /> },
-    { name: "Jadwal & Appointment", path: "/jadwalappointment", icon: <CalendarDays size={22} /> },
-    { name: "Hasil Lab", path: "/lab", icon: <FlaskConical size={22} /> },
-    { name: "Obat", path: "/obat", icon: <Pill size={22} /> },
-    { name: "Pembayaran", path: "/pembayaran", icon: <CreditCard size={22} /> },
+    { name: "Dashboard", path: "/doctor/dashboarddokter", icon: <Home size={22} /> },
+    { name: "Janji Temu", path: "/doctor/janji", icon: <CalendarDays size={22} /> },
+    { name: "Data Pasien", path: "/doctor/pasien", icon: <Users size={22} /> },
+    { name: "Rekam Medis", path: "/doctor/rekammedis", icon: <ClipboardIcon size={22} /> },
+    { name: "Tulis Resep", path: "/doctor/resep", icon: <Pencil size={22} /> },
+    { name: "Jadwal", path: "/doctor/jadwal", icon: <Clock size={22} /> },
   ];
 
   return (

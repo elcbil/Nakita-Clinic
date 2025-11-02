@@ -1,39 +1,62 @@
 import React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/admin/Home";
+import NavbarAdmin from "./components/NavbarAdmin";
+import NavbarPasien from "./components/NavbarPasien";
+import NavbarDokter from "./components/NavbarDokter";
+
+// Admin Page
+import HomeAdmin from "./pages/admin/Home";
 import DataPasien from "./pages/admin/DataPasien";
 import JadwalAppointment from "./pages/admin/JadwalAppointment";
 import DetailPasien from "./pages/admin/DetailPasien";
 import LoginAdmin from "./pages/LoginAdmin";
 
+// Patient Page
+import DashboardPasien from "./pages/patient/DashboardPasien";
+import JadwalPraktikPasien from "./pages/patient/JadwalPraktik";
+import DetailJadwal from "./pages/patient/DetailJadwal";
+import RiwayatMedis from "./pages/patient/RiwayatMedis";
+import HasilLabPasien from "./pages/patient/HasilLabPasien";
+import ObatPasien from "./pages/patient/ObatPasien";
+
+// Doctor Page
+import DashboardDokter from "./pages/doctor/DashboardDokter";
+
 export default function App() {
   const isAdminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
   const location = useLocation();
+
   const isLoginPage = location.pathname === "/login";
+  const isPatientPage = location.pathname.startsWith("/patient");
+  const isDoctorPage = location.pathname.startsWith("/doctor");
 
   return (
     <div className="flex h-screen">
-      {/* Navbar hanya muncul kalau bukan halaman login */}
-      {!isLoginPage && <Navbar />}
+      {/* ===== NAVBAR TAMPIL SESUAI ROLE ===== */}
+      {!isLoginPage && <>{isPatientPage ? <NavbarPasien /> : isDoctorPage ? <NavbarDokter /> : <NavbarAdmin />}</>}
 
-      {/* Konten utama */}
+      {/* ===== KONTEN UTAMA ===== */}
       <div className="grow bg-gray-50 p-4 sm:p-6 overflow-y-auto scroll-smooth">
         <Routes>
-          {/* Halaman login */}
+          {/* ===== LOGIN ===== */}
           <Route path="/login" element={<LoginAdmin />} />
 
-          {/* Home */}
-          <Route path="/" element={isAdminLoggedIn ? <Home /> : <Navigate to="/login" replace />} />
-
-          {/* Data Pasien */}
+          {/* ===== ADMIN ===== */}
+          <Route path="/home" element={isAdminLoggedIn ? <HomeAdmin /> : <Navigate to="/login" replace />} />
           <Route path="/pasien" element={isAdminLoggedIn ? <DataPasien /> : <Navigate to="/login" replace />} />
-
-          {/* Detail Pasien */}
-          <Route path="/data-pasien/:id" element={isAdminLoggedIn ? <DetailPasien /> : <Navigate to="/login" replace />} />
-
-          {/* Jadwal */}
+          <Route path="/datapasien/:id" element={isAdminLoggedIn ? <DetailPasien /> : <Navigate to="/login" replace />} />
           <Route path="/jadwalappointment" element={isAdminLoggedIn ? <JadwalAppointment /> : <Navigate to="/login" replace />} />
+
+          {/* ===== PASIEN ===== */}
+          <Route path="/patient/dashboardpasien" element={<DashboardPasien />} />
+          <Route path="/patient/jadwal" element={<JadwalPraktikPasien />} />
+          <Route path="/patient/detail-jadwal/:id" element={<DetailJadwal />} />
+          <Route path="/patient/riwayat" element={<RiwayatMedis />} />
+          <Route path="/patient/lab" element={<HasilLabPasien />} />
+          <Route path="/patient/obat" element={<ObatPasien />} />
+
+          {/* ===== DOKTER ===== */}
+          <Route path="/doctor/dashboarddokter" element={<DashboardDokter />} />
         </Routes>
       </div>
     </div>
