@@ -24,6 +24,10 @@ import ProfilPasien from "./pages/patient/ProfilPasien";
 // Doctor Page
 import DashboardDokter from "./pages/doctor/DashboardDokter";
 import JanjiTemu from "./pages/doctor/JanjiTemu";
+import DataPasien2 from "./pages/doctor/DataPasien2";
+import RekamMedis from "./pages/doctor/RekamMedis";
+import TulisResep from "./pages/doctor/TulisResep";
+import JadwalPraktek from "./pages/doctor/JadwalPraktek";
 
 export default function App() {
   const isAdminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
@@ -64,6 +68,12 @@ export default function App() {
           {/* ===== DOKTER ===== */}
           <Route path="/doctor/dashboarddokter" element={<DashboardDokter />} />
           <Route path="/doctor/janjitemu" element={<JanjiTemu />} />
+          <Route path="/doctor/datapasien2" element={<DataPasien2 />} />
+          <Route path="/doctor/rekammedis" element={<RekamMedis />} />
+          <Route path="/doctor/tulisresep" element={<TulisResep />} />
+          <Route path="/doctor/jadwalpraktek" element={<JadwalPraktek />} />
+
+          
         </Routes>
       </div>
     </div>
