@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const menus = [
     { name: "Dashboard", path: "/doctor/dashboarddokter", icon: <Home size={22} /> },
-    { name: "Janji Temu", path: "/doctor/janji", icon: <CalendarDays size={22} /> },
+    { name: "Janji Temu", path: "/doctor/janjitemu", icon: <CalendarDays size={22} /> },
     { name: "Data Pasien", path: "/doctor/pasien", icon: <Users size={22} /> },
     { name: "Rekam Medis", path: "/doctor/rekammedis", icon: <ClipboardIcon size={22} /> },
     { name: "Tulis Resep", path: "/doctor/resep", icon: <Pencil size={22} /> },

@@ -10,6 +10,7 @@ import DataPasien from "./pages/admin/DataPasien";
 import JadwalAppointment from "./pages/admin/JadwalAppointment";
 import DetailPasien from "./pages/admin/DetailPasien";
 import LoginAdmin from "./pages/LoginAdmin";
+import ProfilAdmin from "./pages/admin/ProfilAdmin";
 
 // Patient Page
 import DashboardPasien from "./pages/patient/DashboardPasien";
@@ -18,9 +19,11 @@ import DetailJadwal from "./pages/patient/DetailJadwal";
 import RiwayatMedis from "./pages/patient/RiwayatMedis";
 import HasilLabPasien from "./pages/patient/HasilLabPasien";
 import ObatPasien from "./pages/patient/ObatPasien";
+import ProfilPasien from "./pages/patient/ProfilPasien";
 
 // Doctor Page
 import DashboardDokter from "./pages/doctor/DashboardDokter";
+import JanjiTemu from "./pages/doctor/JanjiTemu";
 
 export default function App() {
   const isAdminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
@@ -39,6 +42,7 @@ export default function App() {
       <div className="grow bg-gray-50 p-4 sm:p-6 overflow-y-auto scroll-smooth">
         <Routes>
           {/* ===== LOGIN ===== */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginAdmin />} />
 
           {/* ===== ADMIN ===== */}
@@ -46,6 +50,7 @@ export default function App() {
           <Route path="/pasien" element={isAdminLoggedIn ? <DataPasien /> : <Navigate to="/login" replace />} />
           <Route path="/datapasien/:id" element={isAdminLoggedIn ? <DetailPasien /> : <Navigate to="/login" replace />} />
           <Route path="/jadwalappointment" element={isAdminLoggedIn ? <JadwalAppointment /> : <Navigate to="/login" replace />} />
+          <Route path="/profiladmin" element={isAdminLoggedIn ? <ProfilAdmin /> : <Navigate to="/login" replace />} />
 
           {/* ===== PASIEN ===== */}
           <Route path="/patient/dashboardpasien" element={<DashboardPasien />} />
@@ -54,9 +59,11 @@ export default function App() {
           <Route path="/patient/riwayat" element={<RiwayatMedis />} />
           <Route path="/patient/lab" element={<HasilLabPasien />} />
           <Route path="/patient/obat" element={<ObatPasien />} />
+          <Route path="/patient/profilpasien" element={<ProfilPasien />} />
 
           {/* ===== DOKTER ===== */}
           <Route path="/doctor/dashboarddokter" element={<DashboardDokter />} />
+          <Route path="/doctor/janjitemu" element={<JanjiTemu />} />
         </Routes>
       </div>
     </div>

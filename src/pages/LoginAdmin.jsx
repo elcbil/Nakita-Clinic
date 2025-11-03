@@ -13,7 +13,7 @@ export default function LoginAdmin() {
     // Contoh login dummy
     if (username === "admin" && password === "12345") {
       localStorage.setItem("isAdminLoggedIn", "true");
-      navigate("/"); // arahkan ke halaman utama admin (dashboard)
+      navigate("/home"); // arahkan ke halaman utama admin (dashboard)
     } else {
       setError("Username atau password salah!");
     }

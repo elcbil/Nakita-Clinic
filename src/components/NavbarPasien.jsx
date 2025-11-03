@@ -53,7 +53,10 @@ const Navbar = () => {
 
       {/* Profil Section */}
       <div className="mb-6">
-        <Link to="/profil" className={`flex items-center gap-3 px-4 py-2 rounded-lg mx-2 transition-all duration-300 ${location.pathname === "/profil" ? "bg-blue-200 text-blue-700 font-semibold" : "text-gray-600 hover:bg-blue-100"}`}>
+        <Link
+          to="/profilpasien"
+          className={`flex items-center gap-3 px-4 py-2 rounded-lg mx-2 transition-all duration-300 ${location.pathname === "/profilpasien" ? "bg-blue-200 text-blue-700 font-semibold" : "text-gray-600 hover:bg-blue-100"}`}
+        >
           <User size={22} />
           <span className={`text-sm transition-all duration-300 ease-in-out ${isExpanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3 hidden"}`}>Profil</span>
         </Link>
