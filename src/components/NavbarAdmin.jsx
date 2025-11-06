@@ -12,7 +12,7 @@ const Navbar = () => {
     { name: "Data Pasien", path: "/pasien", icon: <Users size={22} /> },
     { name: "Jadwal & Appointment", path: "/jadwalappointment", icon: <CalendarDays size={22} /> },
     { name: "Hasil Lab", path: "/lab", icon: <FlaskConical size={22} /> },
-    { name: "Obat", path: "/obat", icon: <Pill size={22} /> },
+    { name: "Obat", path: "/stokobat", icon: <Pill size={22} /> },
     { name: "Pembayaran", path: "/pembayaran", icon: <CreditCard size={22} /> },
   ];
 

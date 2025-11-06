@@ -10,6 +10,7 @@ import DataPasien from "./pages/admin/DataPasien";
 import JadwalAppointment from "./pages/admin/JadwalAppointment";
 import DetailPasien from "./pages/admin/DetailPasien";
 import LoginAdmin from "./pages/LoginAdmin";
+import StockObat from "./pages/admin/StokObat";
 import ProfilAdmin from "./pages/admin/ProfilAdmin";
 
 // Patient Page
@@ -28,6 +29,7 @@ import DataPasien2 from "./pages/doctor/DataPasien2";
 import RekamMedis from "./pages/doctor/RekamMedis";
 import TulisResep from "./pages/doctor/TulisResep";
 import JadwalPraktek from "./pages/doctor/JadwalPraktek";
+import ProfileDoktor from "./pages/doctor/ProfilDoktor";
 
 export default function App() {
   const isAdminLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
@@ -54,6 +56,7 @@ export default function App() {
           <Route path="/pasien" element={isAdminLoggedIn ? <DataPasien /> : <Navigate to="/login" replace />} />
           <Route path="/datapasien/:id" element={isAdminLoggedIn ? <DetailPasien /> : <Navigate to="/login" replace />} />
           <Route path="/jadwalappointment" element={isAdminLoggedIn ? <JadwalAppointment /> : <Navigate to="/login" replace />} />
+          <Route path="/stokobat" element={isAdminLoggedIn ? <StockObat /> : <Navigate to="/login" replace />} />
           <Route path="/profiladmin" element={isAdminLoggedIn ? <ProfilAdmin /> : <Navigate to="/login" replace />} />
 
           {/* ===== PASIEN ===== */}
@@ -72,6 +75,7 @@ export default function App() {
           <Route path="/doctor/rekammedis" element={<RekamMedis />} />
           <Route path="/doctor/tulisresep" element={<TulisResep />} />
           <Route path="/doctor/jadwalpraktek" element={<JadwalPraktek />} />
+          <Route path="/doctor/profiledoktor" element={<ProfileDoktor />} />
 
           
         </Routes>
